@@ -23,9 +23,9 @@ type menuD struct {
 }
 
 func menu() {
-	width := float32(r.GetScreenWidth()) / 4
+	width := float32(r.GetScreenWidth()) / 6
 	for i, val := range menuDat {
-		menuDat[i].Toggle, menuDat[i].Active = r.GuiDropdownBox(r.NewRectangle(float32(i)*width, 0, width, float32(r.GetScreenHeight())/10), strings.Join(val.Items, ";"), val.Active, val.Toggled)
+		menuDat[i].Toggle, menuDat[i].Active = r.GuiDropdownBox(r.NewRectangle(float32(i)*width, 0, width, float32(r.GetScreenHeight())/12), strings.Join(val.Items, ";"), val.Active, val.Toggled)
 		if menuDat[i].Toggle {
 			menuDat[i].Toggled = !menuDat[i].Toggled
 		}
