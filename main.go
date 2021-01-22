@@ -12,9 +12,10 @@ func main() {
 	r.SetConfigFlags(r.FlagWindowResizable)
 	r.InitWindow(800, 450, "Raylib Go Plus")
 	for !r.WindowShouldClose() {
+		r.SetMouseScale(1, 1)
 		r.BeginDrawing()
 		r.ClearBackground(r.RayWhite)
-		menu([]string{"file"})
+		menu()
 		r.EndDrawing()
 	}
 	r.CloseWindow()
