@@ -1,6 +1,8 @@
 package main
 
-import r "github.com/lachee/raylib-goplus/raylib"
+import (
+	r "github.com/lachee/raylib-goplus/raylib"
+)
 
 func handle(err error) {
 	if err != nil {
@@ -16,6 +18,7 @@ func main() {
 		r.BeginDrawing()
 		r.ClearBackground(r.RayWhite)
 		menu()
+		guiAlerts()
 		r.EndDrawing()
 	}
 	r.CloseWindow()
