@@ -13,9 +13,10 @@ type Layer struct {
 	Mask     *r.Image
 	Source   string
 	Rotation float64
-	ScaleX   int
-	ScaleY   int
+	ScaleX   float64
+	ScaleY   float64
+	Selected bool
 
-	imCache  *r.Image
-	texCache r.Texture2D
+	im  *r.Image
+	tex r.Texture2D
 }

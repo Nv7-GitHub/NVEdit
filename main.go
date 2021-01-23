@@ -28,9 +28,9 @@ func main() {
 		height = r.GetScreenHeight()
 	}
 	for _, layer := range layers {
-		r.UnloadImage(layer.imCache)
-		r.UnloadImage(layer.Mask)
-		r.UnloadTexture(layer.texCache)
+		layer.im.Unload()
+		layer.Mask.Unload()
+		layer.tex.Unload()
 	}
 	r.CloseWindow()
 }
