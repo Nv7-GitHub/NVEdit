@@ -32,6 +32,11 @@ func loadLayer(src string) {
 		ScaleX: float64(imCache.Width) / float64(im.Width),
 		ScaleY: float64(imCache.Height) / float64(im.Height),
 
+		CropScaleX: 1,
+		CropScaleY: 1,
+		CropX:      0,
+		CropY:      0,
+
 		im:  im,
 		tex: tex,
 	}

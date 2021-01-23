@@ -16,6 +16,11 @@ type Layer struct {
 	ScaleX   float64
 	ScaleY   float64
 
+	CropX      int
+	CropY      int
+	CropScaleX float64
+	CropScaleY float64
+
 	im  *r.Image
 	tex r.Texture2D
 }
