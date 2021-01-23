@@ -6,6 +6,7 @@ import (
 
 var width int
 var height int
+var selected int
 
 func handle(err error) {
 	if err != nil {

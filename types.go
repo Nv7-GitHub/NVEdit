@@ -15,7 +15,6 @@ type Layer struct {
 	Rotation float64
 	ScaleX   float64
 	ScaleY   float64
-	Selected bool
 
 	im  *r.Image
 	tex r.Texture2D
