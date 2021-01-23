@@ -1,6 +1,8 @@
 package main
 
-import "image"
+import (
+	r "github.com/lachee/raylib-goplus/raylib"
+)
 
 var layers []Layer
 
@@ -8,11 +10,12 @@ var layers []Layer
 type Layer struct {
 	X        int
 	Y        int
-	Mask     image.Image
+	Mask     *r.Image
 	Source   string
 	Rotation float64
 	ScaleX   int
 	ScaleY   int
 
-	imCache image.Image
+	imCache  *r.Image
+	texCache r.Texture2D
 }

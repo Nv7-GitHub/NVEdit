@@ -7,7 +7,7 @@ import (
 	r "github.com/lachee/raylib-goplus/raylib"
 )
 
-var alerts = make(chan string)
+var alerts func(string)
 
 var alertInput string
 var hasAlert bool
@@ -17,24 +17,21 @@ var editing bool
 func alert(title string, handler func(string)) {
 	alertInput = title
 	hasAlert = true
-	go func() {
-		val := <-alerts
-		handler(val)
-	}()
+	alerts = handler
 }
 
 func guiAlerts() {
 	if hasAlert {
-		r.DrawRectangle(r.GetScreenWidth()/4-1, r.GetScreenHeight()/4-1, r.GetScreenWidth()/2+2, r.GetScreenHeight()/2+2, r.Black)
-		r.DrawRectangle(r.GetScreenWidth()/4, r.GetScreenHeight()/4, r.GetScreenWidth()/2, r.GetScreenHeight()/2, r.RayWhite)
-		r.DrawText(alertInput, r.GetScreenWidth()/4+10, r.GetScreenHeight()/4+10, 20, r.Black)
+		r.DrawRectangle(width/4-1, height/4-1, width/2+2, height/2+2, r.Black)
+		r.DrawRectangle(width/4, height/4, width/2, height/2, r.RayWhite)
+		r.DrawText(alertInput, width/4+10, height/4+10, 20, r.Black)
 		var editMode bool
-		editMode, inputText = r.GuiTextBox(r.NewRectangle(float32(r.GetScreenWidth()/4+5), float32(r.GetScreenHeight()/2-15), float32(r.GetScreenWidth()/2)-10, 30), inputText, 100, editing)
+		editMode, inputText = r.GuiTextBox(r.NewRectangle(float32(width/4+5), float32(height/2-15), float32(width/2)-10, 30), inputText, 100, editing)
 		if editMode {
 			editing = !editing
 		}
-		if r.GuiButton(r.NewRectangle(float32(r.GetScreenWidth()/4)+5, float32(r.GetScreenHeight()/2+30), float32(r.GetScreenWidth()/2)-10, 30), "Submit") {
-			alerts <- inputText
+		if r.GuiButton(r.NewRectangle(float32(width/4)+5, float32(height/2+30), float32(width/2)-10, 30), "Submit") {
+			alerts(inputText)
 			hasAlert = false
 			inputText = ""
 		}
@@ -52,7 +49,7 @@ var menuDat = []menuD{
 	menuD{
 		0,
 		false,
-		[]string{"File", "Open", "Save", "Export", "Import"},
+		[]string{"File", "Import", "Export"},
 		false,
 		0,
 		fileFuncs,
@@ -60,7 +57,7 @@ var menuDat = []menuD{
 	menuD{
 		0,
 		false,
-		[]string{"Crop", "Scale", "Lasso Crop"},
+		[]string{"Resize", "Crop", "Move", "Lasso Crop"},
 		false,
 		0,
 		func(a, b int) int {
@@ -80,10 +77,10 @@ type menuD struct {
 }
 
 func menu() {
-	width := float32(r.GetScreenWidth()) / 6
+	wi := float32(width / 6)
 	for i, val := range menuDat {
 		menuDat[i].OldActive = menuDat[i].Active
-		menuDat[i].Toggle, menuDat[i].Active = r.GuiDropdownBox(r.NewRectangle(float32(i)*width, 0, width, float32(r.GetScreenHeight())/12), strings.Join(val.Items, ";"), val.Active, val.Toggled)
+		menuDat[i].Toggle, menuDat[i].Active = r.GuiDropdownBox(r.NewRectangle(float32(i)*wi, 0, wi, float32(height/12)), strings.Join(val.Items, ";"), val.Active, val.Toggled)
 		if menuDat[i].Toggle {
 			menuDat[i].Toggled = !menuDat[i].Toggled
 		}

@@ -1,33 +1,26 @@
 package main
 
 import (
-	"image"
-	"image/jpeg"
-	"image/png"
-	"os"
-	"path/filepath"
+	r "github.com/lachee/raylib-goplus/raylib"
 )
 
 func loadLayer(src string) {
-	file, err := os.Open(src)
-	handle(err)
-	ext := filepath.Ext(src)
-	var img image.Image
-	if ext == ".jpg" || ext == ".jpeg" {
-		img, err = jpeg.Decode(file)
-		handle(err)
-	} else {
-		img, err = png.Decode(file)
-		handle(err)
+	imCache := r.LoadImage(src)
+	if imCache.Width > imCache.Height {
+		r.ImageResize(imCache, width/100*95, int(float32(imCache.Height)/float32(imCache.Width)*float32(height/100*95))*2)
 	}
+
+	texCache := r.LoadTextureFromImage(imCache)
+
 	layer := Layer{
-		X:      0,
-		Y:      0,
-		Mask:   image.NewRGBA(img.Bounds()),
+		X:      width / 1000 * 25,
+		Y:      height / 10,
+		Mask:   r.GenImageColor(int(imCache.Width), int(imCache.Height), r.Transparent),
 		ScaleX: 1,
 		ScaleY: 1,
 
-		imCache: img,
+		imCache:  imCache,
+		texCache: texCache,
 	}
 	layers = append(layers, layer)
 }
