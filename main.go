@@ -16,7 +16,7 @@ func handle(err error) {
 
 func main() {
 	r.SetConfigFlags(r.FlagWindowResizable)
-	r.InitWindow(800, 450, "Raylib Go Plus")
+	r.InitWindow(800, 450, "NVEdit")
 	for !r.WindowShouldClose() {
 		r.SetMouseScale(1, 1)
 		r.BeginDrawing()
