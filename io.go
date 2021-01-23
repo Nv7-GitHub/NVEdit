@@ -12,8 +12,9 @@ func loadLayer(src string) {
 		go func() {
 			for !r.IsMouseButtonUp(r.MouseLeftButton) {
 			}
-			handle(errors.New("image does not exist"))
+			handle(errors.New("image does not exist"), true)
 		}()
+		return
 	}
 
 	imCache := im.Copy()

@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	r "github.com/lachee/raylib-goplus/raylib"
 )
 
@@ -10,10 +8,13 @@ var width int
 var height int
 var selected int
 
-func handle(err error) {
+func handle(err error, isNotFatal ...bool) {
 	if err != nil {
-		alert(err.Error(), func(string) { panic(err) }, false)
-		fmt.Println(hasAlert)
+		alert(err.Error(), func(string) {
+			if len(isNotFatal) == 0 {
+				panic(err)
+			}
+		}, false)
 	}
 }
 

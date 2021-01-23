@@ -33,7 +33,7 @@ func guiAlerts() {
 				editing = !editing
 			}
 		}
-		if r.GuiButton(r.NewRectangle(float32(width/4)+5, float32(height/2+30), float32(width/2)-10, 30), "Submit") {
+		if r.GuiButton(r.NewRectangle(float32(width/4)+5, float32(height/2+30), float32(width/2)-10, 30), "Ok") {
 			alerts(inputText)
 			hasAlert = false
 			inputText = ""
