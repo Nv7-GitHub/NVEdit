@@ -57,7 +57,7 @@ var menuDat = []menuD{
 	menuD{
 		0,
 		false,
-		[]string{"Resize", "Crop", "Move", "Lasso Crop"},
+		[]string{"Translate", "Resize", "Crop", "Lasso Crop"},
 		false,
 		0,
 		func(a, b int) int {

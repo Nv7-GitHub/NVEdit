@@ -8,6 +8,8 @@ func loadLayer(src string) {
 	imCache := r.LoadImage(src)
 	if imCache.Width > imCache.Height {
 		r.ImageResize(imCache, width/100*95, int(float32(imCache.Height)/float32(imCache.Width)*float32(height/100*95))*2)
+	} else {
+		r.ImageResize(imCache, int(float32(imCache.Width)/float32(imCache.Height)*float32(width/100*95))/2, height/100*95)
 	}
 
 	texCache := r.LoadTextureFromImage(imCache)
