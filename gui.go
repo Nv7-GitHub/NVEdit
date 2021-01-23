@@ -12,11 +12,13 @@ var alertInput string
 var hasAlert bool
 var inputText string
 var editing bool
+var hasInput = true
 
-func alert(title string, handler func(string)) {
+func alert(title string, handler func(string), inp bool) {
 	alertInput = title
 	hasAlert = true
 	alerts = handler
+	hasInput = inp
 }
 
 func guiAlerts() {
@@ -24,10 +26,12 @@ func guiAlerts() {
 		r.DrawRectangle(width/4-1, height/4-1, width/2+2, height/2+2, r.Black)
 		r.DrawRectangle(width/4, height/4, width/2, height/2, r.RayWhite)
 		r.DrawText(alertInput, width/4+10, height/4+10, 20, r.Black)
-		var editMode bool
-		editMode, inputText = r.GuiTextBox(r.NewRectangle(float32(width/4+5), float32(height/2-15), float32(width/2)-10, 30), inputText, 100, editing)
-		if editMode {
-			editing = !editing
+		if hasInput {
+			var editMode bool
+			editMode, inputText = r.GuiTextBox(r.NewRectangle(float32(width/4+5), float32(height/2-15), float32(width/2)-10, 30), inputText, 100, editing)
+			if editMode {
+				editing = !editing
+			}
 		}
 		if r.GuiButton(r.NewRectangle(float32(width/4)+5, float32(height/2+30), float32(width/2)-10, 30), "Submit") {
 			alerts(inputText)
@@ -39,7 +43,7 @@ func guiAlerts() {
 
 func fileFuncs(newVal int, index int) int {
 	if newVal == 1 {
-		alert("Open File", func(val string) { loadLayer(val) })
+		alert("Open File", func(val string) { loadLayer(val) }, true)
 	}
 	return 0
 }

@@ -9,7 +9,11 @@ import (
 func loadLayer(src string) {
 	im := r.LoadImage(src)
 	if im.Width == 0 && im.Height == 0 {
-		handle(errors.New("image does not exist"))
+		go func() {
+			for !r.IsMouseButtonUp(r.MouseLeftButton) {
+			}
+			handle(errors.New("image does not exist"))
+		}()
 	}
 
 	imCache := im.Copy()
