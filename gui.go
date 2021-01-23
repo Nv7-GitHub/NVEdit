@@ -4,46 +4,17 @@ import (
 	"strings"
 
 	r "github.com/lachee/raylib-goplus/raylib"
+	"github.com/sqweek/dialog"
 )
-
-var alerts func(string)
-
-var alertInput string
-var hasAlert bool
-var inputText string
-var editing bool
-var hasInput = true
-
-func alert(title string, handler func(string), inp bool) {
-	alertInput = title
-	hasAlert = true
-	alerts = handler
-	hasInput = inp
-}
-
-func guiAlerts() {
-	if hasAlert {
-		r.DrawRectangle(width/4-1, height/4-1, width/2+2, height/2+2, r.Black)
-		r.DrawRectangle(width/4, height/4, width/2, height/2, r.RayWhite)
-		r.DrawText(alertInput, width/4+10, height/4+10, 20, r.Black)
-		if hasInput {
-			var editMode bool
-			editMode, inputText = r.GuiTextBox(r.NewRectangle(float32(width/4+5), float32(height/2-15), float32(width/2)-10, 30), inputText, 100, editing)
-			if editMode {
-				editing = !editing
-			}
-		}
-		if r.GuiButton(r.NewRectangle(float32(width/4)+5, float32(height/2+30), float32(width/2)-10, 30), "Ok") {
-			alerts(inputText)
-			hasAlert = false
-			inputText = ""
-		}
-	}
-}
 
 func fileFuncs(newVal int, index int) int {
 	if newVal == 1 {
-		alert("Open File", func(val string) { loadLayer(val) }, true)
+		filename, err := dialog.File().Filter("Image", "png", "jpg", "jpeg").Load()
+		if err != nil && err.Error() == "Cancelled" {
+			return 0
+		}
+		handle(err)
+		loadLayer(filename)
 	}
 	return 0
 }
