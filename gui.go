@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"strings"
 
 	r "github.com/lachee/raylib-goplus/raylib"
@@ -61,8 +60,9 @@ var menuDat = []menuD{
 		false,
 		0,
 		func(a, b int) int {
-			fmt.Println(a)
-			return b
+			oldX = -1
+			oldY = -1
+			return a
 		},
 	},
 }
