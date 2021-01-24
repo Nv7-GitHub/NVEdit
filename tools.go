@@ -144,7 +144,7 @@ func cropTool() {
 func lassoCropTool() {
 	if r.IsMouseButtonDown(r.MouseLeftButton) {
 		x := r.GetMouseX() - layers[selected].X
-		y := r.GetMouseY() - layers[selected].X
+		y := r.GetMouseY() - layers[selected].Y
 		width := int(float64(layers[selected].im.Width) * layers[selected].ScaleX * layers[selected].CropScaleX)
 		height := int(float64(layers[selected].im.Height) * layers[selected].ScaleY * layers[selected].CropScaleY)
 		if x > 0 && y > 0 && x < width && y < height {
@@ -199,12 +199,15 @@ func lassoCropTool() {
 			gc.SetLineWidth(5)
 			gc.BeginPath()
 
+			offX := float64(-1 * layers[selected].X)
+			offY := float64(-1 * layers[selected].Y)
+
 			for i := range pointsX[:pointPos-1] {
-				gc.MoveTo(float64(pointsX[i]), float64(pointsY[i]))
-				gc.LineTo(float64(pointsX[i+1]), float64(pointsY[i+1]))
+				gc.MoveTo(float64(pointsX[i])+offX, float64(pointsY[i])+offY)
+				gc.LineTo(float64(pointsX[i+1])+offX, float64(pointsY[i+1])+offY)
 			}
-			gc.MoveTo(float64(pointsX[pointPos-1]), float64(pointsY[pointPos-1]))
-			gc.LineTo(float64(pointsX[0]), float64(pointsY[0]))
+			gc.MoveTo(float64(pointsX[pointPos-1])+offX, float64(pointsY[pointPos-1])+offY)
+			gc.LineTo(float64(pointsX[0])+offX, float64(pointsY[0])+offY)
 
 			gc.Close()
 			gc.FillStroke()
