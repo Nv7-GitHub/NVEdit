@@ -18,5 +18,6 @@ Untitled.png
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
-# Fyne-Cross output
+# Compilation output
 fyne-cross/*
+NVEdit.tar.gz
