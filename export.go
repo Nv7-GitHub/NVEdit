@@ -35,8 +35,14 @@ func (m *mk) At(x, y int) color.Color {
 
 func export(filename string) {
 	out := image.NewRGBA(image.Rect(0, 0, width, height))
-	for _, layer := range layers {
-		img := readImg(layer.Source)
+	for i, layer := range layers {
+		var img image.Image
+		if layer.Source == "text" {
+			img = renderText(i)
+		} else {
+			img = readImg(layer.Source)
+		}
+
 		size := img.Bounds()
 		masked := image.NewRGBA(size)
 

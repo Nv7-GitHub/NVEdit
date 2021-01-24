@@ -22,6 +22,8 @@ func fileFuncs(newVal int, index int) int {
 		}
 		handle(err)
 		export(filename)
+	} else {
+		newText()
 	}
 	return 0
 }
@@ -30,7 +32,7 @@ var menuDat = []menuD{
 	menuD{
 		0,
 		false,
-		[]string{"File", "Import", "Export"},
+		[]string{"File", "Import", "Export", "Add Text"},
 		false,
 		0,
 		fileFuncs,
@@ -38,7 +40,7 @@ var menuDat = []menuD{
 	menuD{
 		0,
 		false,
-		[]string{"Translate", "Resize", "Crop", "Lasso Crop"},
+		[]string{"Translate", "Resize", "Crop", "Lasso Crop", "Text"},
 		false,
 		0,
 		func(a, b int) int {
@@ -71,29 +73,34 @@ func menu() {
 		}
 	}
 
-	if r.IsKeyPressed(r.KeyOne) {
-		menuDat[1].Active = 0
-	}
-	if r.IsKeyPressed(r.KeyTwo) {
-		menuDat[1].Active = 1
-	}
-	if r.IsKeyPressed(r.KeyThree) {
-		menuDat[1].Active = 2
-	}
-	if r.IsKeyPressed(r.KeyFour) {
-		menuDat[1].Active = 3
-	}
-	if r.IsKeyPressed(r.KeyBackspace) || r.IsKeyPressed(r.KeyDelete) {
-		copy(layers[selected:], layers[selected+1:])
-		layers[len(layers)-1] = Layer{}
-		layers = layers[:len(layers)-1]
-	}
-	if r.IsKeyPressed(r.KeyI) {
-		filename, err := dialog.File().Filter("Image", "png", "jpg", "jpeg").Load()
-		if err != nil && err.Error() == "Cancelled" {
-			return
+	if menuDat[1].Active != 4 {
+		if r.IsKeyPressed(r.KeyOne) {
+			menuDat[1].Active = 0
 		}
-		handle(err)
-		loadLayer(filename)
+		if r.IsKeyPressed(r.KeyTwo) {
+			menuDat[1].Active = 1
+		}
+		if r.IsKeyPressed(r.KeyThree) {
+			menuDat[1].Active = 2
+		}
+		if r.IsKeyPressed(r.KeyFour) {
+			menuDat[1].Active = 3
+		}
+		if r.IsKeyPressed(r.KeyFive) {
+			menuDat[1].Active = 4
+		}
+		if r.IsKeyPressed(r.KeyDelete) || (menuDat[1].Active != 4 && r.IsKeyPressed(r.KeyBackspace)) && len(layers) > 0 {
+			copy(layers[selected:], layers[selected+1:])
+			layers[len(layers)-1] = Layer{}
+			layers = layers[:len(layers)-1]
+		}
+		if r.IsKeyPressed(r.KeyI) {
+			filename, err := dialog.File().Filter("Image", "png", "jpg", "jpeg").Load()
+			if err != nil && err.Error() == "Cancelled" {
+				return
+			}
+			handle(err)
+			loadLayer(filename)
+		}
 	}
 }

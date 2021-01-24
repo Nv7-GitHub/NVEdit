@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"image"
 	"image/color"
 
@@ -58,7 +59,9 @@ func resizeTool() {
 			layers[selected].ScaleX += float64(x-oldX) / float64(layers[selected].im.Width) / layers[selected].CropScaleX * xop
 			layers[selected].ScaleY += float64(y-oldY) / float64(layers[selected].im.Height) / layers[selected].CropScaleY * yop
 			imCache := layers[selected].im.Copy()
-			imCache.AlphaMask(layers[selected].Mask)
+			if layers[selected].Mask != nil {
+				imCache.AlphaMask(layers[selected].Mask)
+			}
 			imCache.Crop(r.NewRectangle(float32(layers[selected].CropX), float32(layers[selected].CropY), float32(layers[selected].im.Width)*float32(layers[selected].CropScaleX), float32(layers[selected].im.Height)*float32(layers[selected].CropScaleY)))
 			imCache.Resize(int(layers[selected].ScaleX*layers[selected].CropScaleX*float64(layers[selected].im.Width)), int(layers[selected].ScaleY*layers[selected].CropScaleY*float64(layers[selected].im.Height)))
 			layers[selected].tex.Unload()
@@ -129,7 +132,9 @@ func cropTool() {
 				layers[selected].CropY += x - oldX
 			}
 			imCache := layers[selected].im.Copy()
-			imCache.AlphaMask(layers[selected].Mask)
+			if layers[selected].Mask != nil {
+				imCache.AlphaMask(layers[selected].Mask)
+			}
 			imCache.Crop(r.NewRectangle(float32(layers[selected].CropX), float32(layers[selected].CropY), float32(layers[selected].im.Width)*float32(layers[selected].CropScaleX), float32(layers[selected].im.Height)*float32(layers[selected].CropScaleY)))
 			imCache.Resize(int(layers[selected].ScaleX*layers[selected].CropScaleX*float64(layers[selected].im.Width)), int(layers[selected].ScaleY*layers[selected].CropScaleY*float64(layers[selected].im.Height)))
 			layers[selected].tex.Unload()
@@ -228,6 +233,22 @@ func lassoCropTool() {
 			pointsX = make([]int, 1000)
 			pointsY = make([]int, 1000)
 			pointPos = 0
+		}
+	}
+}
+
+func textTool() {
+	if layers[selected].Source == "text" {
+		key := r.GetKeyPressed()
+		if r.IsKeyPressed(r.KeyBackspace) && len(layers[selected].Text) > 1 {
+			layers[selected].Text = layers[selected].Text[:len(layers[selected].Text)-2]
+			fmt.Println(layers[selected].Text)
+			renderTextLayer(selected)
+		}
+		if int32(key) > 38 && int32(key) < 256 || int32(key) == 32 {
+			character := string([]byte{byte(int32(key))})
+			layers[selected].Text += character
+			renderTextLayer(selected)
 		}
 	}
 }

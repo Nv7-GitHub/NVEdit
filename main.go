@@ -34,7 +34,9 @@ func main() {
 	}
 	for _, layer := range layers {
 		layer.im.Unload()
-		layer.Mask.Unload()
+		if layer.Mask != nil {
+			layer.Mask.Unload()
+		}
 		layer.tex.Unload()
 	}
 	r.CloseWindow()

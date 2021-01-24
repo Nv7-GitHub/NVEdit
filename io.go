@@ -2,9 +2,15 @@ package main
 
 import (
 	"errors"
+	"io/ioutil"
+
+	"github.com/golang/freetype"
+	"github.com/golang/freetype/truetype"
 
 	r "github.com/lachee/raylib-goplus/raylib"
 )
+
+var f *truetype.Font
 
 func loadLayer(src string) {
 	im := r.LoadImage(src)
@@ -43,4 +49,30 @@ func loadLayer(src string) {
 	}
 	selected = len(layers)
 	layers = append(layers, layer)
+}
+
+func newText() {
+	if f == nil {
+		fontBytes, err := ioutil.ReadFile("Arial.ttf")
+		handle(err)
+		f, err = freetype.ParseFont(fontBytes)
+		handle(err)
+	}
+
+	layer := Layer{
+		X:      width / 1000 * 25,
+		Y:      height / 10,
+		ScaleX: 1,
+		ScaleY: 1,
+		Source: "text",
+		Text:   " ",
+
+		CropScaleX: 1,
+		CropScaleY: 1,
+		CropX:      0,
+		CropY:      0,
+	}
+	selected = len(layers)
+	layers = append(layers, layer)
+	renderTextLayer(selected)
 }

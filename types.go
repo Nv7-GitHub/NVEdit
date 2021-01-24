@@ -26,4 +26,6 @@ type Layer struct {
 
 	im  *r.Image
 	tex r.Texture2D
+
+	Text string
 }

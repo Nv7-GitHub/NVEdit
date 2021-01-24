@@ -54,6 +54,9 @@ func renderLayers() {
 		case 3:
 			lassoCropTool()
 			break
+		case 4:
+			textTool()
+			break
 		default:
 			break
 		}
