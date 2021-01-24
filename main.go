@@ -27,6 +27,7 @@ func main() {
 		r.ClearBackground(r.RayWhite)
 		renderLayers()
 		menu()
+		//r.DrawText(strconv.Itoa(r.GetFPS()), 10, 200, 20, r.Black)
 		r.EndDrawing()
 		width = r.GetScreenWidth()
 		height = r.GetScreenHeight()

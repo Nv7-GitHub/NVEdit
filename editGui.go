@@ -10,6 +10,10 @@ var origX int
 var origY int
 var num int
 
+var pointsX = make([]int, 1000)
+var pointsY = make([]int, 1000)
+var pointPos = 0
+
 func renderLayers() {
 	for i, layer := range layers {
 		if i == selected {
@@ -29,14 +33,8 @@ func renderLayers() {
 		x, y := r.GetMouseX(), r.GetMouseY()
 		x -= layers[selected].X
 		y -= layers[selected].Y
-		if x < width && x > 0 && y < height && y > 0 {
-			switch menuDat[1].Active {
-			case 0:
-				translateTool()
-				break
-			default:
-				break
-			}
+		if x < width && x > 0 && y < height && y > 0 && menuDat[1].Active == 0 {
+			translateTool()
 		}
 	} else {
 		oldX = -1
@@ -50,6 +48,9 @@ func renderLayers() {
 			break
 		case 2:
 			cropTool()
+			break
+		case 3:
+			lassoCropTool()
 			break
 		default:
 			break
