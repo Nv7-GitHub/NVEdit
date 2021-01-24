@@ -4,6 +4,7 @@
 *.dll
 *.so
 *.dylib
+*.syso
 
 # Test binary, built with `go test -c`
 *.test
@@ -16,3 +17,6 @@ Untitled.png
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+
+# Fyne-Cross output
+fyne-cross/*
