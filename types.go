@@ -1,6 +1,8 @@
 package main
 
 import (
+	"image"
+
 	r "github.com/lachee/raylib-goplus/raylib"
 )
 
@@ -11,6 +13,7 @@ type Layer struct {
 	X        int
 	Y        int
 	Mask     *r.Image
+	MaskGo   image.Image
 	Source   string
 	Rotation float64
 	ScaleX   float64

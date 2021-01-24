@@ -31,6 +31,7 @@ func loadLayer(src string) {
 		Mask:   r.GenImageColor(int(imCache.Width), int(imCache.Height), r.Black),
 		ScaleX: float64(imCache.Width) / float64(im.Width),
 		ScaleY: float64(imCache.Height) / float64(im.Height),
+		Source: src,
 
 		CropScaleX: 1,
 		CropScaleY: 1,

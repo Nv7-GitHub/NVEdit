@@ -214,6 +214,7 @@ func lassoCropTool() {
 
 			layers[selected].Mask.Unload()
 			layers[selected].Mask = r.LoadImageFromGo(mask)
+			layers[selected].MaskGo = mask
 
 			imCache := layers[selected].im.Copy()
 			imCache.AlphaMask(layers[selected].Mask)

@@ -15,6 +15,13 @@ func fileFuncs(newVal int, index int) int {
 		}
 		handle(err)
 		loadLayer(filename)
+	} else if newVal == 2 {
+		filename, err := dialog.File().Filter("Image", "png", "jpg", "jpeg").Save()
+		if err != nil && err.Error() == "Cancelled" {
+			return 0
+		}
+		handle(err)
+		export(filename)
 	}
 	return 0
 }
