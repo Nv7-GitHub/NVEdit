@@ -59,7 +59,7 @@ func renderLayers() {
 }
 
 func processSelected() {
-	var newSelected int
+	newSelected := -1
 	for i, layer := range layers {
 		width := int(float64(layer.im.Width) * layer.ScaleX * layer.CropScaleX)
 		height := int(float64(layer.im.Height) * layer.ScaleY * layer.CropScaleY)
@@ -70,10 +70,13 @@ func processSelected() {
 			newSelected = i
 		}
 	}
-	if newSelected != selected {
+	if newSelected != selected && newSelected != -1 {
 		selected = newSelected
 		oldX = -1
 		oldY = -1
 		num = -1
+		pointsX = make([]int, 1000)
+		pointsY = make([]int, 1000)
+		pointPos = 0
 	}
 }
