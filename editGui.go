@@ -1,5 +1,7 @@
 package main
 
+// Icon Credits: https://icon-library.com/icon/editor-icon-5.html
+
 import (
 	r "github.com/lachee/raylib-goplus/raylib"
 )
